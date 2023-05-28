@@ -27,7 +27,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val scanQrCodeLauncher = registerForActivityResult(ScanQRCode()) { result ->
-            Toast.makeText(activity, "Result of QR code: $result", Toast.LENGTH_SHORT).show()
+            val parts = result.toString().split("/")
+            val id = parts[4].removePrefix("0").toIntOrNull()
+
+            if (id != null) {
+                Toast.makeText(activity, "ID extracted from QR code: $id", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, "Failed to extract ID from QR code", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.buttonScanQRCode.setOnClickListener {
             scanQrCodeLauncher.launch(null)
