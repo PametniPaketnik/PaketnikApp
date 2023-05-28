@@ -11,4 +11,7 @@
     <string name="FirstpageTitle">PAMETNI PAKETNIK </string>
     <string name="loginButton">Login</string>
     <string name="ButtonRegister">Register</string>
+    <string name="loginTitle">Login</string>
+    <string name="Donthaveaccount">Don\'t have an account?</string>
+    <string name="create_account">Create Account</string>
 </resources>

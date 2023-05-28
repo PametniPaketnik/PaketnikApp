@@ -46,8 +46,8 @@
 
         <Button
             android:id="@+id/buttonLogin"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/buttonLoginWidth"
+            android:layout_height="@dimen/buttonLoginHeight"
             android:background="@drawable/custom_button_login"
             android:text="@string/loginButton"
             android:textColor="#FFFFFF"
@@ -67,8 +67,8 @@
         <Button
             android:id="@+id/buttonRegister"
             android:background="@drawable/custom_button_register"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/buttonLoginWidth"
+            android:layout_height="@dimen/buttonLoginHeight"
             android:text="@string/ButtonRegister"
             android:textColor="@color/blue"
             android:textSize="@dimen/testSize"
