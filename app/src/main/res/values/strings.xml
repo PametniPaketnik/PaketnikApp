@@ -6,4 +6,12 @@
     <string name="recycleView_HistoryBoxID">Box ID: </string>
     <string name="recycleView_HistoryDate">Date: </string>
     <string name="recycleView_HistoryOpen">Open: </string>
+
+
+    <string name="FirstpageTitle">PAMETNI PAKETNIK </string>
+    <string name="loginButton">Login</string>
+    <string name="ButtonRegister">Register</string>
+    <string name="loginTitle">Login</string>
+    <string name="Donthaveaccount">Don\'t have an account?</string>
+    <string name="create_account">Create Account</string>
 </resources>
