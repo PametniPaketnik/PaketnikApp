@@ -49,4 +49,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation project(path: ':lib')
     implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.2")
+
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }

@@ -9,6 +9,7 @@ import com.example.paketnikapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var app: MyApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.Map -> {
                     replaceFragment(MapFragment())
+                }
+                R.id.Histories -> {
+                    replaceFragment(RecycleViewFragment())
                 }
             }
             true
