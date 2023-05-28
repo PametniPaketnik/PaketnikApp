@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/rvCardView"
@@ -33,12 +33,12 @@
                 app:tint="@color/black" />
 
             <TextView
-                android:id="@+id/recycleViewItem_Name"
+                android:id="@+id/recycleViewItem_BoxID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/recycleView_HistoryName"
+                android:text="@string/recycleView_HistoryBoxID"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/ball_ImageView"
@@ -48,19 +48,19 @@
                 android:id="@+id/recycleViewItem_Date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="70dp"
                 android:text="@string/recycleView_HistoryDate"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/recycleViewItem_Date"
                 app:layout_constraintStart_toEndOf="@+id/ball_ImageView"
-                app:layout_constraintTop_toBottomOf="@+id/recycleViewItem_Name" />
+                app:layout_constraintTop_toBottomOf="@+id/recycleViewItem_BoxID" />
 
             <TextView
                 android:id="@+id/recycleViewItem_Open"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/recycleView_HistoryOpen"
