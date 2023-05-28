@@ -14,4 +14,5 @@
     <string name="loginTitle">Login</string>
     <string name="Donthaveaccount">Don\'t have an account?</string>
     <string name="create_account">Create Account</string>
+    <string name="already_have_an_account">Already have an account</string>
 </resources>
