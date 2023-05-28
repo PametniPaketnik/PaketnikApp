@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.example.paketnikapp.databinding.FragmentHomeBinding
 import io.github.g00fy2.quickie.ScanQRCode
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding!!
