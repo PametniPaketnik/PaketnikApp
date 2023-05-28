@@ -19,7 +19,7 @@ import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding!!
