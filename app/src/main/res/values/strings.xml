@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">PaketnikApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="recycleView_History">History</string>
+    <string name="recycleView_HistoryName">Box ID: </string>
+    <string name="recycleView_HistoryDate">Date: </string>
+    <string name="recycleView_HistoryOpen">Open: </string>
 </resources>
