@@ -15,6 +15,7 @@ import com.example.paketnikapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var app: MyApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
 
         binding.bottomNav.setupWithNavController(navController)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
