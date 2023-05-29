@@ -1,5 +1,7 @@
 package com.example.paketnikapp
 
+import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import androidx.fragment.app.Fragment
@@ -19,10 +21,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
+import kotlin.io.path.*
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -70,6 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     // 1. str = String!: the input String to decode, which is converted to bytes using the default charset
                     // 2. flags = Int: controls certain features of the decoded output. Pass DEFAULT to decode standard Base64.
                     val decoded64Data = Base64.decode(data, 0)
+                    playAudioFromByteArray(decoded64Data)
 
                     activity?.runOnUiThread {
                         Toast.makeText(activity, "Data: $data", Toast.LENGTH_SHORT).show()
@@ -92,6 +95,38 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun playAudioFromByteArray(data: ByteArray) {
+        try {
+            val tempFile = createTempFile("temp", ".mp3") // Create a temporary file to store the audio data
+
+            // Write the audio data to the temporary file
+            tempFile.writeBytes(data)
+
+            val mediaPlayer = MediaPlayer()
+
+            // Set the data source for the media player
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mediaPlayer.setDataSource(tempFile.toFile().absolutePath)
+            }
+
+            // Prepare the media player asynchronously
+            mediaPlayer.prepareAsync()
+
+            // Set a listener to start playing the audio once the media player is prepared
+            mediaPlayer.setOnPreparedListener {
+                it.start()
+            }
+
+            // Set a listener to release the media player resources after playback is complete
+            mediaPlayer.setOnCompletionListener {
+                it.release()
+                tempFile.deleteIfExists()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 }
 
