@@ -1,6 +1,7 @@
 package com.example.paketnikapp
 
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,8 +62,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     val responseBody = response.body?.string()
 
                     // Parse the JSON response
-                    val jsonObject = JSONObject(responseBody)
+                    val jsonObject = JSONObject(responseBody!!)
                     val data = jsonObject.optString("data", "")
+
+                    // Decode the received data to a bytearray
+                    // Parameters:
+                    // 1. str = String!: the input String to decode, which is converted to bytes using the default charset
+                    // 2. flags = Int: controls certain features of the decoded output. Pass DEFAULT to decode standard Base64.
+                    val decoded64Data = Base64.decode(data, 0)
 
                     activity?.runOnUiThread {
                         Toast.makeText(activity, "Data: $data", Toast.LENGTH_SHORT).show()
