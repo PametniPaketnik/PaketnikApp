@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.paketnikapp.databinding.FragmentLoginBinding
-import com.example.paketnikapp.databinding.FragmentProfileBinding
 
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
-    private var _binding: FragmentProfileBinding? = null
+class LoginFragment : Fragment() {
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,20 +17,28 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentProfileBinding.inflate(inflater,container,false)
+        _binding = FragmentLoginBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logoutButton()
+        loginButton()
+        registerButton()
     }
 
-    private fun logoutButton() {
-        binding.buttonLogout.setOnClickListener {
-            val action = ProfileFragmentDirections.actionProfileFragmentToFragmentFirstPage()
+    private fun loginButton() {
+        binding.buttonLoginOnLogin.setOnClickListener {
+            val action = LoginFragmentDirections.actionFragmentLoginToHomeFragment()
             findNavController().navigate(action)
         }
+    }
+
+    private fun registerButton() {
+        /*binding.buttonLogin.setOnClickListener {
+            val action = fragment_first_pageDirections.actionFragmentFirstPageToFragmentRegister()
+            findNavController().navigate(action)
+        }*/
     }
 
     override fun onDestroyView() {
