@@ -62,4 +62,7 @@ dependencies {
 
     // okHTTP
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
+    //round
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
