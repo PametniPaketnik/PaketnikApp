@@ -12,8 +12,10 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="445dp"
-            android:layout_height="413dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/paketnik"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,40 +23,46 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.54" />
+            app:layout_constraintGuide_percent="0.44" />
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/FirstpageTitle"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="36dp"
+            android:autoText="false"
             android:shadowColor="#808080"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            android:text="@string/FirstpageTitle"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintVertical_bias="0.01" />
 
         <Button
             android:id="@+id/buttonLogin"
-            android:layout_width="@dimen/buttonLoginWidth"
-            android:layout_height="@dimen/buttonLoginHeight"
-            android:background="@drawable/custom_button_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="@color/blue"
             android:text="@string/loginButton"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/testSize"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintHorizontal_bias="0.446"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -62,20 +70,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.78" />
+            app:layout_constraintGuide_begin="479dp" />
 
         <Button
             android:id="@+id/buttonRegister"
-            android:background="@drawable/custom_button_register"
-            android:layout_width="@dimen/buttonLoginWidth"
-            android:layout_height="@dimen/buttonLoginHeight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/blue"
             android:text="@string/ButtonRegister"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="@dimen/testSize"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+            app:layout_constraintBottom_toTopOf="@+id/guideline10"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
+            app:layout_constraintVertical_bias="0.0"></Button>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.86" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
