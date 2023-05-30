@@ -1,5 +1,9 @@
 package com.example.paketnikapp
 
+import android.content.Context
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +30,11 @@ import kotlin.io.path.*
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var audioManager: AudioManager
+    private lateinit var audioFocusRequest: AudioFocusRequest
+    private lateinit var audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +45,44 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        requestAudioFocus()
+        mediaPlayer?.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releaseAudioFocus()
+        mediaPlayer?.pause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_GAIN -> {
+                    mediaPlayer?.start()
+                }
+                AudioManager.AUDIOFOCUS_LOSS -> {
+                    mediaPlayer?.stop()
+                    mediaPlayer?.release()
+                    mediaPlayer = null
+                }
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    mediaPlayer?.pause()
+                }
+            }
+        }
 
         val scanQrCodeLauncher = registerForActivityResult(ScanQRCode()) { result ->
             val parts = result.toString().split("/")
@@ -71,12 +116,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     // Parameters:
                     // 1. str = String!: the input String to decode, which is converted to bytes using the default charset
                     // 2. flags = Int: controls certain features of the decoded output. Pass DEFAULT to decode standard Base64.
-                    val decoded64Data = Base64.decode(data, 0)
+                    val decoded64Data = Base64.decode(data, Base64.DEFAULT)
                     playAudioFromByteArray(decoded64Data)
 
-                    activity?.runOnUiThread {
+                    /*activity?.runOnUiThread {
                         Toast.makeText(activity, "Data: $data", Toast.LENGTH_SHORT).show()
-                    }
+                    }*/
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
@@ -92,11 +137,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     fun playAudioFromByteArray(data: ByteArray) {
         try {
             val tempFile = createTempFile("temp", ".mp3") // Create a temporary file to store the audio data
@@ -104,45 +144,78 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             // Write the audio data to the temporary file
             tempFile.writeBytes(data)
 
-            val mediaPlayer = MediaPlayer()
+            mediaPlayer = MediaPlayer()
 
             // Set the data source for the media player
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                mediaPlayer.setDataSource(tempFile.toFile().absolutePath)
+                mediaPlayer!!.setDataSource(tempFile.toFile().absolutePath)
             }
 
             // Prepare the media player asynchronously
-            mediaPlayer.prepareAsync()
+            mediaPlayer!!.prepareAsync()
 
             // Set a listener to start playing the audio once the media player is prepared
-            mediaPlayer.setOnPreparedListener {
-                it.start()
+            mediaPlayer!!.setOnPreparedListener {
+                mediaPlayer?.start()
             }
 
             // Set a listener to release the media player resources after playback is complete
-            mediaPlayer.setOnCompletionListener {
-                it.release()
+            mediaPlayer?.setOnCompletionListener {
+                mediaPlayer?.release()
                 tempFile.deleteIfExists()
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
     }
-}
 
-fun sendPostRequest(url: String, jsonBody: String, token: String, callback: Callback) {
-    val client = OkHttpClient()
-    val mediaType = "application/json".toMediaTypeOrNull()
-    val requestBody = jsonBody.toRequestBody(mediaType)
-    val headers = Headers.Builder()
-        .add("Authorization", "Bearer $token")
-        .build()
+    private fun sendPostRequest(url: String, jsonBody: String, token: String, callback: Callback) {
+        val client = OkHttpClient()
+        val mediaType = "application/json".toMediaTypeOrNull()
+        val requestBody = jsonBody.toRequestBody(mediaType)
+        val headers = Headers.Builder()
+            .add("Authorization", "Bearer $token")
+            .build()
 
-    val request = Request.Builder()
-        .url(url)
-        .headers(headers)
-        .post(requestBody)
-        .build()
+        val request = Request.Builder()
+            .url(url)
+            .headers(headers)
+            .post(requestBody)
+            .build()
 
-    client.newCall(request).enqueue(callback)
+        client.newCall(request).enqueue(callback)
+    }
+
+    private fun requestAudioFocus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val focusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setAudioAttributes(AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build())
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build()
+
+            audioFocusRequest = focusRequest
+            audioManager.requestAudioFocus(focusRequest)
+        }
+        else {
+            @Suppress("DEPRECATION")
+            audioManager.requestAudioFocus(
+                audioFocusChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN
+            )
+        }
+    }
+
+    private fun releaseAudioFocus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            audioManager.abandonAudioFocusRequest(audioFocusRequest)
+        }
+        else {
+            @Suppress("DEPRECATION")
+            audioManager.abandonAudioFocus(audioFocusChangeListener)
+        }
+    }
 }
