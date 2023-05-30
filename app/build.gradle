@@ -62,4 +62,7 @@ dependencies {
 
     // okHTTP
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
+    // Bcrypt
+    implementation group: 'at.favre.lib', name: 'bcrypt', version: '0.10.2'
 }
