@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_fragment_login_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_fragment_login_to_fragment_register"
+            app:destination="@id/fragment_register" />
     </fragment>
     <fragment
         android:id="@+id/fragment_register"
@@ -54,4 +57,9 @@
             android:id="@+id/action_fragment_register_to_fragment_login"
             app:destination="@id/fragment_login" />
     </fragment>
+    <fragment
+        android:id="@+id/recycleViewFragment"
+        android:name="com.example.paketnikapp.RecycleViewFragment"
+        android:label="RecycleView"
+        tools:layout="@layout/fragment_recycle_view" />
 </navigation>

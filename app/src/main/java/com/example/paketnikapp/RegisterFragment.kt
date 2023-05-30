@@ -24,7 +24,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginButton()
-        registerButton()
+        existingLoginButton()
     }
 
     private fun loginButton() {
@@ -34,11 +34,11 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun registerButton() {
-        /*binding.buttonLogin.setOnClickListener {
-            val action = fragment_first_pageDirections.actionFragmentFirstPageToFragmentRegister()
+    private fun existingLoginButton() {
+        binding.LinkToLogin.setOnClickListener {
+            val action = RegisterFragmentDirections.actionFragmentRegisterToFragmentLogin()
             findNavController().navigate(action)
-        }*/
+        }
     }
 
     override fun onDestroyView() {
