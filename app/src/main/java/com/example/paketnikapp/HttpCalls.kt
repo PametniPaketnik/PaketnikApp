@@ -1,5 +1,9 @@
 package com.example.paketnikapp
 
+import com.example.lib.Histories
+import com.example.lib.History
+import com.example.lib.Mailbox
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
@@ -52,6 +56,64 @@ class HttpCalls {
             catch (e: Exception) {
                 Timber.tag("HTTP CALLS").v(e.stackTrace.toString())
                 false
+            }
+        }
+
+        suspend fun history(): List<History> = withContext(Dispatchers.IO) {
+            try {
+                val client = OkHttpClient()
+                val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val historyUrl = url + "history"
+
+                val request = Request.Builder()
+                    .url(historyUrl)
+                    .get()
+                    .build()
+
+                val response = client.newCall(request).execute()
+
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val responseBody = response.body?.string()
+
+                val histories = Gson().fromJson(responseBody, Array<History>::class.java)
+
+                histories.forEach { history ->
+                    history.parentMailBox = "531"
+                }
+
+                histories.toList() // Convert the array of histories to a list and return
+
+            } catch (e: Exception) {
+                Timber.tag("HTTP CALLS").v(e.stackTraceToString())
+                emptyList() // Return an empty list if an exception occurs
+            }
+        }
+
+        suspend fun getMailboxById(mailboxId: String): Mailbox? = withContext(Dispatchers.IO) {
+            try {
+                val client = OkHttpClient()
+                val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val mailboxUrl = url + "mailbox/$mailboxId"
+
+                val request = Request.Builder()
+                    .url(mailboxUrl)
+                    .get()
+                    .build()
+
+                val response = client.newCall(request).execute()
+
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val responseBody = response.body?.string()
+
+                val mailbox = Gson().fromJson(responseBody, Mailbox::class.java)
+
+                mailbox // Return the retrieved mailbox
+
+            } catch (e: Exception) {
+                Timber.tag("HTTP CALLS").v(e.stackTraceToString())
+                null // Return null if an exception occurs
             }
         }
     }

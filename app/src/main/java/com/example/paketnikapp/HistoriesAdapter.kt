@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lib.Histories
 import com.example.lib.History
 
-class HistoriesAdapter(private var data: Histories): RecyclerView.Adapter<HistoriesAdapter.HistoryViewHolder>() {
+class HistoriesAdapter(private var data: List<History>): RecyclerView.Adapter<HistoriesAdapter.HistoryViewHolder>() {
 
     inner class HistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val tvBoxID: TextView = itemView.findViewById(R.id.recycleViewItem_BoxID)
@@ -25,9 +25,9 @@ class HistoriesAdapter(private var data: Histories): RecyclerView.Adapter<Histor
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        val history: History = data.getHistoryList()[position]
+        val history: History = data[position]
 
-        holder.tvBoxID.text = "Box ID: ${history.parentMailbox}"
+        holder.tvBoxID.text = "Box ID: ${history.parentMailBox}"
         holder.tvDate.text = history.date.toString()
         holder.tvOpen.text = history.open
 
@@ -41,6 +41,6 @@ class HistoriesAdapter(private var data: Histories): RecyclerView.Adapter<Histor
     }
 
     override fun getItemCount(): Int {
-        return data.getHistoryList().size
+        return data.size
     }
 }

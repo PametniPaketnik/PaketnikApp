@@ -12,9 +12,9 @@ class Mailbox(
     val lng: Number,
     val open: Boolean,
     val date: Date,
-    val userId: User,
+    /*val userId: User,
     val mailboxUser: User,
-    val accessUser: List<User>
+    val accessUser: List<User>*/
 
 )
 {
