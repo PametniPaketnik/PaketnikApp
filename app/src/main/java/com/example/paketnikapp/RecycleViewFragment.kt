@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lib.Histories
 import com.example.paketnikapp.databinding.FragmentRecycleViewBinding
 
-class RecycleViewFragment : Fragment() {
+class RecycleViewFragment : Fragment(R.layout.fragment_recycle_view) {
     private var _binding: FragmentRecycleViewBinding? = null
     private val binding get() = _binding!!
     private var app = Histories.generate(10)
