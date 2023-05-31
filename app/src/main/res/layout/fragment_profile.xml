@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/textViewEmail"
+        android:id="@+id/textViewPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -17,19 +17,19 @@
         android:text="sabina.pauric@gmail.com"
         android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/verticalBarrier"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPostcode" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/textViewPostLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Email address: "
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewEmail"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewPost"
         app:layout_constraintStart_toStartOf="@+id/guideline25" />
 
     <TextView
-        android:id="@+id/textViewFirstName"
+        android:id="@+id/textViewStreet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -41,26 +41,26 @@
         app:layout_constraintTop_toTopOf="@+id/guideline27" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewStreetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Name: "
         android:textAlignment="textStart"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewFirstName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewStreet"
         app:layout_constraintStart_toStartOf="@+id/guideline25" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textViewPostcodeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Last name: "
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewLastName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewPostcode"
         app:layout_constraintStart_toStartOf="@+id/guideline25" />
 
     <TextView
-        android:id="@+id/textViewLastName"
+        android:id="@+id/textViewPostcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -68,7 +68,7 @@
         android:layout_weight="1"
         android:text="Pauric"
         app:layout_constraintStart_toEndOf="@+id/verticalBarrier"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewStreet" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"
@@ -140,10 +140,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="146dp" />
+        app:layout_constraintGuide_percent="0.1997264" />
 
     <TextView
-        android:id="@+id/textViewUsername"
+        android:id="@+id/textViewBoxID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sabinapa"
@@ -167,7 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="end"
-        app:constraint_referenced_ids="textView3,textView9,textView22" />
+        app:constraint_referenced_ids="textViewStreetLabel,textViewPostcodeLabel,textViewPostLabel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
