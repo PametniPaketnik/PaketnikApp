@@ -31,6 +31,7 @@ class MailboxFragment : Fragment(R.layout.fragment_mailbox) {
                 val mailbox = HttpCalls.getMailboxById("531")
                 if (mailbox != null) {
                     Toast.makeText(context, mailbox.street, Toast.LENGTH_SHORT).show()
+                    //binding.textViewMailboxBoxID.text = mailbox.street
                 }
             } catch (e: Exception) {
                 Toast.makeText(context, "Error retrieving mailbox", Toast.LENGTH_SHORT).show()
