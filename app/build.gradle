@@ -66,9 +66,6 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
 
-    // Bcrypt
-    implementation group: 'at.favre.lib', name: 'bcrypt', version: '0.10.2'
-
     //round
     implementation 'androidx.cardview:cardview:1.0.0'
 }
