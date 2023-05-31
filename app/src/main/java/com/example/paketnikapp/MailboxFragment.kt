@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.paketnikapp.databinding.FragmentMapBinding
+import com.example.paketnikapp.databinding.FragmentMailboxBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MapFragment : Fragment(R.layout.fragment_map) {
-    private var _binding: FragmentMapBinding? = null
+class MailboxFragment : Fragment(R.layout.fragment_mailbox) {
+    private var _binding: FragmentMailboxBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -20,7 +20,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMapBinding.inflate(inflater,container,false)
+        _binding = FragmentMailboxBinding.inflate(inflater,container,false)
         return binding.root
     }
 

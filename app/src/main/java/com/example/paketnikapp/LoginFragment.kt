@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
-                if (HttpCalls.login(username, password)) {
+                if (!HttpCalls.login(username, password)) {
                     activity?.runOnUiThread {
                         Toast.makeText(activity, "Uspesno prijavljeni", Toast.LENGTH_SHORT).show()
                     }

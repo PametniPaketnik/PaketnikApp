@@ -62,4 +62,9 @@
         android:name="com.example.paketnikapp.RecycleViewFragment"
         android:label="RecycleView"
         tools:layout="@layout/fragment_recycle_view" />
+    <fragment
+        android:id="@+id/mailboxFragment"
+        android:name="com.example.paketnikapp.MailboxFragment"
+        android:label="fragment_mailbox"
+        tools:layout="@layout/fragment_mailbox" />
 </navigation>
