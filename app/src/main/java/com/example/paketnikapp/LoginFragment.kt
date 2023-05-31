@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-//import at.favre.lib.crypto.bcrypt.BCrypt
-import org.mindrot.jbcrypt.BCrypt
+import at.favre.lib.crypto.bcrypt.BCrypt
+//import org.mindrot.jbcrypt.BCrypt
 import com.example.paketnikapp.databinding.FragmentLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +36,7 @@ class LoginFragment : Fragment() {
     private fun loginButton() {
         binding.buttonLoginOnLogin.setOnClickListener {
             val username = binding.editUsername.text.toString()
-            //val password = BCrypt.withDefaults()
-            //    .hashToString(10, binding.editPassword.text.toString().toCharArray())
-
-            val salt = BCrypt.gensalt(10)
-            val password = BCrypt.hashpw(binding.editPassword.text.toString(), salt)
+            val password = binding.editPassword.text.toString()
 
             val scope = CoroutineScope(Dispatchers.Main)
 
