@@ -61,11 +61,14 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     // okHTTP
+
     implementation "com.squareup.okhttp3:okhttp:4.9.1"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
 
     // Bcrypt
     implementation group: 'at.favre.lib', name: 'bcrypt', version: '0.10.2'
-    //implementation 'org.mindrot:jbcrypt:0.4'
+
+    //round
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

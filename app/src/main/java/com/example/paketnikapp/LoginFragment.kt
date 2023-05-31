@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginButton()
-        registerButton()
+        createAccountButton()
     }
 
     private fun loginButton() {
@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
-                if (HttpCalls.login(username, password)) {
+                if (!HttpCalls.login(username, password)) {
                     activity?.runOnUiThread {
                         Toast.makeText(activity, "Uspesno prijavljeni", Toast.LENGTH_SHORT).show()
                     }
@@ -58,11 +58,11 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun registerButton() {
-        /*binding.buttonLogin.setOnClickListener {
-            val action = fragment_first_pageDirections.actionFragmentFirstPageToFragmentRegister()
+    private fun createAccountButton() {
+        binding.LinkToRegister.setOnClickListener {
+            val action = LoginFragmentDirections.actionFragmentLoginToFragmentRegister()
             findNavController().navigate(action)
-        }*/
+        }
     }
 
     override fun onDestroyView() {

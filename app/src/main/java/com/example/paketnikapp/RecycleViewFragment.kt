@@ -5,14 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lib.Histories
 import com.example.paketnikapp.databinding.FragmentRecycleViewBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class RecycleViewFragment : Fragment() {
+class RecycleViewFragment : Fragment(R.layout.fragment_recycle_view) {
     private var _binding: FragmentRecycleViewBinding? = null
     private val binding get() = _binding!!
-    private var app = Histories.generate(10)
     private lateinit var adapter: HistoriesAdapter
 
     override fun onCreateView(
@@ -27,11 +29,19 @@ class RecycleViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // app = (activity as MainActivity).getApp()
-        binding.rvHistory.layoutManager = LinearLayoutManager(context)
 
-        adapter = HistoriesAdapter(app)
-
-        binding.rvHistory.adapter = adapter
+        // Call the history() function to retrieve the Histories list
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val histories = HttpCalls.history() // Call the history() function from HttpCalls
+                adapter = HistoriesAdapter(histories) // Pass the histories list to the adapter
+                binding.rvHistory.layoutManager = LinearLayoutManager(context)
+                binding.rvHistory.adapter = adapter
+            } catch (e: Exception) {
+                // Handle any errors that occurred during the HTTP call
+                Toast.makeText(context, "Error retrieving histories", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {

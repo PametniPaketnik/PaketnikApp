@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.paketnikapp.databinding.FragmentHomeBinding
 import io.github.g00fy2.quickie.ScanQRCode
 import okhttp3.Call
@@ -65,6 +66,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mailboxFragmentButton()
 
         audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
@@ -218,6 +221,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         else {
             @Suppress("DEPRECATION")
             audioManager.abandonAudioFocus(audioFocusChangeListener)
+        }
+    }
+
+    private fun mailboxFragmentButton() {
+        binding.buttonMailbox.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToMailboxFragment()
+            findNavController().navigate(action)
         }
     }
 }
