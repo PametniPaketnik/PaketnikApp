@@ -35,7 +35,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var audioFocusRequest: AudioFocusRequest
     private lateinit var audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -116,8 +115,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     // Parameters:
                     // 1. str = String!: the input String to decode, which is converted to bytes using the default charset
                     // 2. flags = Int: controls certain features of the decoded output. Pass DEFAULT to decode standard Base64.
-                    val decoded64Data = Base64.decode(data, Base64.DEFAULT)
-                    playAudioFromByteArray(decoded64Data)
+                    val decoded64data = Base64.decode(data, Base64.DEFAULT)
+                    playAudioFromByteArray(decoded64data)
 
                     /*activity?.runOnUiThread {
                         Toast.makeText(activity, "Data: $data", Toast.LENGTH_SHORT).show()
@@ -137,7 +136,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    fun playAudioFromByteArray(data: ByteArray) {
+    private fun playAudioFromByteArray(data: ByteArray) {
         try {
             val tempFile = createTempFile("temp", ".mp3") // Create a temporary file to store the audio data
 
@@ -160,11 +159,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
 
             // Set a listener to release the media player resources after playback is complete
-            mediaPlayer?.setOnCompletionListener {
+            mediaPlayer?.setOnErrorListener { _, _, _ ->
                 mediaPlayer?.release()
-                tempFile.deleteIfExists()
+                mediaPlayer = null // Set mediaPlayer to null after releasing
+                tempFile.deleteExisting()
+                true
             }
-        } catch (e: IOException) {
+        }
+        catch (e: IOException) {
             e.printStackTrace()
         }
     }
