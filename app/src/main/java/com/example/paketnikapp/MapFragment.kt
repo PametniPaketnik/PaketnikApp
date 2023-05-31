@@ -24,19 +24,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val mailbox = HttpCalls.getMailboxById("531")
-                if (mailbox != null) {
-                    Toast.makeText(context, mailbox.street, Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(context, "Error retrieving mailbox", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
