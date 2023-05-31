@@ -1,6 +1,7 @@
 package com.example.paketnikapp
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -16,16 +17,12 @@ class HttpCalls {
             try {
                 var userExists = false
                 val client = OkHttpClient()
-                val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
 
-                val jsonBody = """
-                {
-                    "username": $username,
-                    "password": $password
-                }
-                """.trimIndent()
+                val requestBody = FormBody.Builder()
+                    .add("username", username)
+                    .add("password", password)
+                    .build()
 
-                val requestBody = jsonBody.toRequestBody(mediaType)
                 val loginUrl = url + "user/login"
 
                 val request = Request.Builder()
@@ -47,6 +44,7 @@ class HttpCalls {
                     }
                 })
 
+                delay(1000)
                 userExists
             }
             catch (e: Exception) {
