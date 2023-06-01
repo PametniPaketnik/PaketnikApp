@@ -1,5 +1,6 @@
 package com.example.paketnikapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
@@ -14,8 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.paketnikapp.HttpCalls.Companion.addHistory
 import com.example.paketnikapp.databinding.FragmentHomeBinding
 import io.github.g00fy2.quickie.ScanQRCode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Headers
@@ -92,6 +97,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             if (id != null) {
                 Toast.makeText(activity, "ID extracted from QR code: $id", Toast.LENGTH_SHORT).show()
+                showConfirmationDialog(id.toString())
             } else {
                 Toast.makeText(activity, "Failed to extract ID from QR code", Toast.LENGTH_SHORT).show()
             }
@@ -229,5 +235,42 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.actionHomeFragmentToMailboxFragment()
             findNavController().navigate(action)
         }
+    }
+
+
+    private fun showConfirmationDialog(id: String) {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Confirmation")
+            .setMessage("Do you successfully open the box?")
+            .setPositiveButton("Yes") { _, _ ->
+                val open = "Successful"
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val success = addHistory(id, open)
+                        if (success) {
+                            Toast.makeText(context, "Successfully added history", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Error adding history", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton("No") { _, _ ->
+                val open = "Unsuccessful"
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val success = addHistory(id, open)
+                        if (success) {
+                            Toast.makeText(context, "Successfully added history", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Error adding history", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .create()
+
+        dialog.show()
     }
 }

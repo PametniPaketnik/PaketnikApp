@@ -69,6 +69,6 @@
     <fragment
         android:id="@+id/mailboxFragment"
         android:name="com.example.paketnikapp.MailboxFragment"
-        android:label="fragment_mailbox"
+        android:label="My Mailbox"
         tools:layout="@layout/fragment_mailbox" />
 </navigation>
