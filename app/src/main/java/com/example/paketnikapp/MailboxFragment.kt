@@ -26,9 +26,12 @@ class MailboxFragment : Fragment(R.layout.fragment_mailbox) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val id = DataHolder.id
+
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val mailbox = HttpCalls.getMailboxById("531")
+                val mailbox = HttpCalls.getMailboxById(id.toString())
                 if (mailbox != null) {
                     //Toast.makeText(context, mailbox.street, Toast.LENGTH_SHORT).show()
                     binding.textViewBoxID.text = mailbox.boxID

@@ -98,6 +98,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             if (id != null) {
                 Toast.makeText(activity, "ID extracted from QR code: $id", Toast.LENGTH_SHORT).show()
                 showConfirmationDialog(id.toString())
+
+                DataHolder.id = id.toString()
+
             } else {
                 Toast.makeText(activity, "Failed to extract ID from QR code", Toast.LENGTH_SHORT).show()
             }

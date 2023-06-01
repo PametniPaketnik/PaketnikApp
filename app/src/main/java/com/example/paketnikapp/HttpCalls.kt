@@ -56,11 +56,11 @@ class HttpCalls {
             }
         }
 
-        suspend fun history(): List<History> = withContext(Dispatchers.IO) {
+        suspend fun getHistoryById(mailboxId: String): List<History> = withContext(Dispatchers.IO) {
             try {
                 val client = OkHttpClient()
                 val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
-                val historyUrl = url + "history"
+                val historyUrl = url + "history/$mailboxId"
 
                 val request = Request.Builder()
                     .url(historyUrl)
@@ -76,7 +76,7 @@ class HttpCalls {
                 val histories = Gson().fromJson(responseBody, Array<History>::class.java)
 
                 histories.forEach { history ->
-                    history.parentMailBox = "531"
+                    history.parentMailBox = mailboxId
                 }
 
                 histories.toList() // Convert the array of histories to a list and return
