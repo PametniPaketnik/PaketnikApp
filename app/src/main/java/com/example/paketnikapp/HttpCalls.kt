@@ -1,6 +1,5 @@
 package com.example.paketnikapp
 
-import com.example.lib.Histories
 import com.example.lib.History
 import com.example.lib.Mailbox
 import com.google.gson.Gson
@@ -9,7 +8,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import timber.log.Timber
 
