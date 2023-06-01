@@ -11,22 +11,27 @@
         android:id="@+id/textViewPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_weight="1"
         android:text="sabina.pauric@gmail.com"
-        android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@+id/verticalBarrier"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPostcode" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline20"
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline25"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPostLabel"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewPostLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:layout_weight="1"
         android:text="Email address: "
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewPost"
-        app:layout_constraintStart_toStartOf="@+id/guideline25" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline25"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPostcodeLabel" />
 
     <TextView
         android:id="@+id/textViewStreet"
@@ -75,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="519dp" />
+        app:layout_constraintGuide_begin="554dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline23"
