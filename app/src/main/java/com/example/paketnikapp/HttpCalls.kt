@@ -114,6 +114,30 @@ class HttpCalls {
                 null // Return null if an exception occurs
             }
         }
+
+        suspend fun addHistory(parentMailBox: String, open: String): Boolean = withContext(Dispatchers.IO) {
+            try {
+                val client = OkHttpClient()
+
+                val requestBody = FormBody.Builder()
+                    .add("parentMailBox", parentMailBox)
+                    .add("open", open)
+                    .build()
+
+                val historyUrl = url + "history"
+
+                val request = Request.Builder()
+                    .url(historyUrl)
+                    .post(requestBody)
+                    .build()
+
+                val response = client.newCall(request).execute()
+                response.isSuccessful
+            } catch (e: Exception) {
+                Timber.tag("HTTP CALLS").v(e.stackTraceToString())
+                false
+            }
+        }
     }
 
 }

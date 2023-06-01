@@ -30,7 +30,7 @@ class MailboxFragment : Fragment(R.layout.fragment_mailbox) {
             try {
                 val mailbox = HttpCalls.getMailboxById("531")
                 if (mailbox != null) {
-                    Toast.makeText(context, mailbox.street, Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, mailbox.street, Toast.LENGTH_SHORT).show()
                     binding.textViewBoxID.text = mailbox.boxID
                     binding.textViewStreet.text = mailbox.street
                     binding.textViewPostcode.text = mailbox.postcode.toString()

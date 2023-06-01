@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import at.favre.lib.crypto.bcrypt.BCrypt
+
 //import org.mindrot.jbcrypt.BCrypt
 import com.example.paketnikapp.databinding.FragmentLoginBinding
 import kotlinx.coroutines.CoroutineScope
