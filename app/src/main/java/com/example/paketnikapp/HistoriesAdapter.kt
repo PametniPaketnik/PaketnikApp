@@ -26,8 +26,9 @@ class HistoriesAdapter(private var data: List<History>): RecyclerView.Adapter<Hi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val history: History = data[position]
+        val mailboxId = DataHolder.id
 
-        holder.tvBoxID.text = "Box ID: ${history.parentMailBox}"
+        holder.tvBoxID.text = "Box ID: $mailboxId"
         holder.tvDate.text = history.date
         holder.tvOpen.text = history.open
 

@@ -20,6 +20,7 @@ import com.example.paketnikapp.databinding.FragmentHomeBinding
 import io.github.g00fy2.quickie.ScanQRCode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
@@ -96,11 +97,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val id = parts[4].removePrefix("0").toIntOrNull()
 
             if (id != null) {
-                Toast.makeText(activity, "ID extracted from QR code: $id", Toast.LENGTH_SHORT).show()
-                showConfirmationDialog(id.toString())
+                // Toast.makeText(activity, "ID extracted from QR code: $id", Toast.LENGTH_SHORT).show()
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val mailbox = HttpCalls.getMailboxById(id.toString())
+                        if (mailbox != null) {
+                            DataHolder.parentMailBox = mailbox._id
+                            Toast.makeText(context, "Playing token for the box with id $id", Toast.LENGTH_SHORT).show()
+
+                            delay(6000)
+                            showConfirmationDialog(mailbox._id)
+                        } else {
+                            Toast.makeText(context, "Error retrieving mailbox", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Error retrieving mailbox", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
                 DataHolder.id = id.toString()
-
             } else {
                 Toast.makeText(activity, "Failed to extract ID from QR code", Toast.LENGTH_SHORT).show()
             }

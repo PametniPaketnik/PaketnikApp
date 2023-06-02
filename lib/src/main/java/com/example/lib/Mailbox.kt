@@ -3,6 +3,7 @@ package com.example.lib
 import java.util.Date
 
 class Mailbox(
+    val _id: String,
     val boxID: String,
     val street: String,
     val postcode: Number,
