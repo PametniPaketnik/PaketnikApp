@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-
-//import org.mindrot.jbcrypt.BCrypt
 import com.example.paketnikapp.databinding.FragmentLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +39,7 @@ class LoginFragment : Fragment() {
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
-                if (!HttpCalls.login(username, password)) {
+                if (HttpCalls.login(username, password)) {
                     activity?.runOnUiThread {
                         Toast.makeText(activity, "Uspesno prijavljeni", Toast.LENGTH_SHORT).show()
                     }
