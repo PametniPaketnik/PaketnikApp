@@ -3,4 +3,5 @@
     <dimen name="testSize">15sp</dimen>
     <dimen name="buttonLoginWidth">300dp</dimen>
     <dimen name="buttonLoginHeight">50dp</dimen>
+    <dimen name="marker_size">50dp</dimen>
 </resources>

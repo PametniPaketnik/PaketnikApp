@@ -18,7 +18,6 @@ class MapFragment : Fragment() {
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: MapView
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +39,7 @@ class MapFragment : Fragment() {
 
         val startPoint = GeoPoint(46.5547, 15.6459)
         map.controller.setCenter(startPoint)
-        map.controller.setZoom(10.5)
+        map.controller.setZoom(14.5)
 
         createMarker()
     }
@@ -61,13 +60,28 @@ class MapFragment : Fragment() {
     }
 
     private fun createMarker() {
-        val mariborMarker = Marker(map)
-        mariborMarker.position = GeoPoint(46.5547, 15.6459)
+        val id = DataHolder.id
+        val lat = DataHolder.lat?.toDouble()
+        val lng = DataHolder.lng?.toDouble()
 
-        mariborMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        mariborMarker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_location_24)
+        if (lat != null && lng != null) {
+            val mailboxMarker = Marker(map)
+            mailboxMarker.position = GeoPoint(lat, lng)
 
-        map.overlays.add(mariborMarker)
-        map.invalidate()
+            mailboxMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            mailboxMarker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_location_24)
+
+            // Povečanje ikone/markera
+            //val markerSize = resources.getDimensionPixelSize(R.dimen.marker_size)
+            //mailboxMarker.setInfoWindowAnchor(0.8f, markerSize.toFloat())
+
+            val infoWindow = MarkerWindow(map)
+            mailboxMarker.infoWindow = infoWindow
+
+            map.overlays.add(mailboxMarker)
+            map.invalidate()
+        }
     }
+
+
 }

@@ -103,6 +103,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         val mailbox = HttpCalls.getMailboxById(id.toString())
                         if (mailbox != null) {
                             DataHolder.parentMailBox = mailbox._id
+                            DataHolder.lng = mailbox.lng
+                            DataHolder.lat = mailbox.lat
+                            DataHolder.street = mailbox.street
+                            DataHolder.postcode = mailbox.postcode
+
                             Toast.makeText(context, "Playing token for the box with id $id", Toast.LENGTH_SHORT).show()
 
                             delay(6000)
