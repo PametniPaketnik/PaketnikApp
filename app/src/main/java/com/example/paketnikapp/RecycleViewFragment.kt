@@ -33,14 +33,15 @@ class RecycleViewFragment : Fragment(R.layout.fragment_recycle_view) {
         // Call the history() function to retrieve the Histories list
 
         val id = DataHolder.id
+        val mailboxId = DataHolder.parentMailBox
 
         if (id != null) {
-            Toast.makeText(activity, "Received ID: $id", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Received boxID: $id", Toast.LENGTH_SHORT).show()
         }
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val histories = HttpCalls.getHistoryById(id.toString()) // Call the history() function from HttpCalls
+                val histories = HttpCalls.getHistoryById(mailboxId.toString()) // Call the history() function from HttpCalls
                 adapter = HistoriesAdapter(histories) // Pass the histories list to the adapter
                 binding.rvHistory.layoutManager = LinearLayoutManager(context)
                 binding.rvHistory.adapter = adapter
