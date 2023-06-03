@@ -11,6 +11,7 @@ import com.example.paketnikapp.databinding.FragmentProfileBinding
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private lateinit var app: MyApplication
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,11 +24,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        app = (activity as MainActivity).getApp()
+        val user = app.getUser()
+
+        binding.textViewUsername.text = user.username
+        binding.textViewFirstName.text = user.firstName
+        binding.textViewLastName.text = user.lastName
+        binding.textViewEmail.text = user.email
         logoutButton()
     }
 
     private fun logoutButton() {
         binding.buttonLogout.setOnClickListener {
+            app.deleteUserFile()
             val action = ProfileFragmentDirections.actionProfileFragmentToFragmentFirstPage()
             findNavController().navigate(action)
         }

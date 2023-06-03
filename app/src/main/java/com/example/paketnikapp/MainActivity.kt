@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.paketnikapp.databinding.ActivityMainBinding
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -30,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
 
         binding.bottomNav.setupWithNavController(navController)
+
+        // Ali smo se že prijavili
+        if(app.getUser().username != "") {
+            Timber.tag("User info").d(app.getUser().toString())
+            navController.navigate(R.id.homeFragment)
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.fragment_first_page || destination.id == R.id.fragment_login

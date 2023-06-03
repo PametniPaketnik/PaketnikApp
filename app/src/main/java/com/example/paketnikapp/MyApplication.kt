@@ -47,6 +47,15 @@ class MyApplication: Application() {
         }
     }
 
+    fun deleteUserFile() {
+        try {
+            FileUtils.forceDelete(file)
+        }
+        catch (e: IOException) {
+            Timber.d("Can't save " + file.path)
+        }
+    }
+
     fun getUser(): User {
         return user
     }
