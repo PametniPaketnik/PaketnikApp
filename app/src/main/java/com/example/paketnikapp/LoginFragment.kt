@@ -44,7 +44,8 @@ class LoginFragment : Fragment() {
                         Toast.makeText(activity, "Uspesno prijavljeni", Toast.LENGTH_SHORT).show()
                     }
 
-                    val action = LoginFragmentDirections.actionFragmentLoginToHomeFragment()
+                    // val action = LoginFragmentDirections.actionFragmentLoginToHomeFragment()
+                    val action = LoginFragmentDirections.actionFragmentLoginToLoginCameraFragment()
                     findNavController().navigate(action)
                 }
                 else {

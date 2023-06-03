@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.fragment_first_page || destination.id == R.id.fragment_login
-                || destination.id == R.id.fragment_register) {
+                || destination.id == R.id.fragment_register || destination.id == R.id.loginCameraFragment) {
                 binding.bottomNav.visibility = View.GONE
             } else {
                 binding.bottomNav.visibility = View.VISIBLE
