@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private lateinit var app: MyApplication
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +28,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        app = (activity as MainActivity).getApp()
+
         loginButton()
         createAccountButton()
     }
@@ -39,9 +42,9 @@ class LoginFragment : Fragment() {
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
-                if (HttpCalls.login(username, password)) {
+                if (HttpCalls.login(username, password, app)) {
                     activity?.runOnUiThread {
-                        Toast.makeText(activity, "Uspesno prijavljeni", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Uspešno prijavljeni", Toast.LENGTH_SHORT).show()
                     }
 
                     // val action = LoginFragmentDirections.actionFragmentLoginToHomeFragment()

@@ -1,7 +1,9 @@
 package com.example.paketnikapp
 
+import android.util.Log
 import com.example.lib.History
 import com.example.lib.Mailbox
+import com.example.lib.User
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +17,7 @@ class HttpCalls {
         private const val url = "http://192.168.56.1:3001/api/"
         //private const val url = "http://192.168.1.18:3001/api/"
 
-        suspend fun login(username: String, password: String): Boolean = withContext(Dispatchers.IO) {
+        suspend fun login(username: String, password: String, app: MyApplication): Boolean = withContext(Dispatchers.IO) {
             try {
                 var userExists = false
                 val client = OkHttpClient()
@@ -38,15 +40,33 @@ class HttpCalls {
                     }
 
                     override fun onResponse(call: Call, response: Response) {
-                        response.use {
+                        try {
+                            val responseBody = response.body?.string()
+                            Timber.tag("ResponseBody").d(responseBody)
+
                             if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
+                            if(!responseBody.isNullOrEmpty()) {
+                                val gson = Gson()
+                                val user = gson.fromJson(responseBody, User::class.java)
+
+                                app.setUser(user)
+                                app.saveUserFile()
+                            }
+
                             userExists = true
+                        }
+                        catch(e: Exception) {
+                            e.printStackTrace()
+                            Timber.tag("Exception").e(Log.getStackTraceString(e))
+                        }
+                        finally {
+                            response.close()
                         }
                     }
                 })
 
-                delay(1000)
+                delay(2000)
                 userExists
             }
             catch (e: Exception) {
