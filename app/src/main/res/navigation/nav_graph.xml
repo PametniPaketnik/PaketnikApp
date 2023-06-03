@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_fragment_login_to_fragment_register"
             app:destination="@id/fragment_register" />
+        <action
+            android:id="@+id/action_fragment_login_to_loginCameraFragment"
+            app:destination="@id/loginCameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_register"
@@ -71,4 +74,12 @@
         android:name="com.example.paketnikapp.MailboxFragment"
         android:label="My Mailbox"
         tools:layout="@layout/fragment_mailbox" />
+    <fragment
+        android:id="@+id/loginCameraFragment"
+        android:name="com.example.paketnikapp.LoginCameraFragment"
+        android:label="LoginCameraFragment" >
+        <action
+            android:id="@+id/action_loginCameraFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
