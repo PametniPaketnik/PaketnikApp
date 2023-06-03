@@ -17,4 +17,13 @@
     <string name="already_have_an_account">Already have an account</string>
 
     <string name="profile_logout">Logout</string>
+    <string name="registerText">Register</string>
+    <string name="usernameText">Username</string>
+    <string name="email_addressText">Email Address</string>
+    <string name="passwordText">Password</string>
+    <string name="first_nameText">First Name</string>
+    <string name="last_nameText">Last Name</string>
+    <string name="telephoneText">Telephone</string>
+    <string name="streetText">Street</string>
+    <string name="postCodeText">Post code</string>
 </resources>
