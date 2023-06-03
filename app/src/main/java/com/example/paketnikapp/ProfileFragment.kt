@@ -36,6 +36,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun logoutButton() {
         binding.buttonLogout.setOnClickListener {
+            app.deleteUserFile()
             val action = ProfileFragmentDirections.actionProfileFragmentToFragmentFirstPage()
             findNavController().navigate(action)
         }
