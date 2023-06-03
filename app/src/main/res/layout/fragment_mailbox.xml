@@ -16,6 +16,8 @@
         android:layout_weight="1"
         android:text="/"
         android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/verticalBarrier"
         app:layout_constraintTop_toBottomOf="@+id/textViewPostcode" />
 
@@ -25,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Post:"
+        android:textSize="16dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewPost"
         app:layout_constraintStart_toStartOf="@+id/guideline25" />
 
@@ -36,7 +39,10 @@
         android:layout_marginTop="32dp"
         android:layout_weight="1"
         android:text="/"
+        android:textSize="16dp"
         android:textAlignment="textStart"
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/verticalBarrier"
         app:layout_constraintTop_toTopOf="@+id/guideline27" />
 
@@ -46,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Street:"
+        android:textSize="16dp"
         android:textAlignment="textStart"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewStreet"
         app:layout_constraintStart_toStartOf="@+id/guideline25" />
@@ -56,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Post code:"
+        android:textSize="16dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewPostcode"
         app:layout_constraintStart_toStartOf="@+id/guideline25" />
 
@@ -67,6 +75,9 @@
         android:layout_marginTop="32dp"
         android:layout_weight="1"
         android:text="/"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/verticalBarrier"
         app:layout_constraintTop_toBottomOf="@+id/textViewStreet" />
 
