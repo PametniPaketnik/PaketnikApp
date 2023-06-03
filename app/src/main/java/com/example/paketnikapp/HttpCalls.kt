@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okio.IOException
 import timber.log.Timber
 
@@ -40,7 +39,7 @@ class HttpCalls {
 
                     override fun onResponse(call: Call, response: Response) {
                         response.use {
-                            if (!response.isSuccessful) throw IOException("Unexected code $response")
+                            if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
                             userExists = true
                         }
@@ -56,10 +55,43 @@ class HttpCalls {
             }
         }
 
+        suspend fun register(username: String, password: String, email: String,
+                             firstName: String, lastName: String, tel: String,
+                             street: String, postCode: String): Boolean = withContext(Dispatchers.IO)
+        {
+            try {
+                val client = OkHttpClient()
+
+                val requestBody = FormBody.Builder()
+                    .add("username", username)
+                    .add("password", password)
+                    .add("email", email)
+                    .add("firstName", firstName)
+                    .add("lastName", lastName)
+                    .add("tel", tel)
+                    .add("street", street)
+                    .add("postCode", postCode)
+                    .build()
+
+                val registerUrl = url + "user/register"
+
+                val request = Request.Builder()
+                    .url(registerUrl)
+                    .post(requestBody)
+                    .build()
+
+                val response = client.newCall(request).execute()
+                response.isSuccessful
+            }
+            catch (e: Exception) {
+                Timber.tag("HTTP CALLS").v(e.stackTrace.toString())
+                false
+            }
+        }
+
         suspend fun getHistoryById(mailboxId: String): List<History> = withContext(Dispatchers.IO) {
             try {
                 val client = OkHttpClient()
-                val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
                 val historyUrl = url + "history/$mailboxId"
 
                 val request = Request.Builder()
@@ -90,7 +122,6 @@ class HttpCalls {
         suspend fun getMailboxById(mailboxId: String): Mailbox? = withContext(Dispatchers.IO) {
             try {
                 val client = OkHttpClient()
-                val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
                 val mailboxUrl = url + "mailbox/$mailboxId"
 
                 val request = Request.Builder()
