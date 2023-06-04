@@ -81,5 +81,8 @@
         <action
             android:id="@+id/action_loginCameraFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginCameraFragment_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
 </navigation>
