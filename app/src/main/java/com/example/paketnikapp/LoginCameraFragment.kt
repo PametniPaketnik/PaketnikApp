@@ -1,151 +1,106 @@
 package com.example.paketnikapp
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.hardware.camera2.CameraAccessException
-import android.hardware.camera2.CameraCaptureSession
-import android.hardware.camera2.CameraCharacteristics
-import android.hardware.camera2.CameraDevice
-import android.hardware.camera2.CameraManager
-import android.hardware.camera2.CaptureRequest
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
-import android.view.Surface
-import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.paketnikapp.databinding.FragmentLoginCameraBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class LoginCameraFragment : Fragment(), SurfaceHolder.Callback {
-    private var _binding: FragmentLoginCameraBinding? = null
-    private val binding get() = _binding!!
-
-    private lateinit var cameraManager: CameraManager
-    private lateinit var cameraDevice: CameraDevice
-    private lateinit var captureSession: CameraCaptureSession
-    private var cameraId: String = ""
+class LoginCameraFragment : Fragment() {
+    private var imageView: ImageView? = null
+    private var button: Button? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginCameraBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_login_camera, container, false)
+        imageView = rootView.findViewById(R.id.imageView)
+        button = rootView.findViewById(R.id.btnCapture)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val surfaceView: SurfaceView = binding.surfaceView
-        val btnStop: Button = binding.btnStop
-
-        surfaceView.holder.addCallback(this)
-
-        btnStop.setOnClickListener {
-            stopCamera()
-
-            val action = LoginCameraFragmentDirections.actionLoginCameraFragmentToHomeFragment()
-            findNavController().navigate(action)
-        }
-    }
-
-    override fun surfaceCreated(holder: SurfaceHolder) {
-        cameraManager = requireContext().getSystemService(CameraManager::class.java)
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            try {
-                // Find the front-facing camera
-                val cameraIds = cameraManager.cameraIdList
-                for (id in cameraIds) {
-                    val cameraCharacteristics = cameraManager.getCameraCharacteristics(id)
-                    if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_FRONT) {
-                        cameraId = id
-                        break
-                    }
-                }
-
-                // Open the front-facing camera
-                cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
-                    override fun onOpened(camera: CameraDevice) {
-                        cameraDevice = camera
-                        startPreview(holder.surface)
-                    }
-
-                    override fun onDisconnected(camera: CameraDevice) {
-                        camera.close()
-                    }
-
-                    override fun onError(camera: CameraDevice, error: Int) {
-                        Toast.makeText(requireContext(), "Error opening camera", Toast.LENGTH_SHORT).show()
-                    }
-                }, null)
-            } catch (e: CameraAccessException) {
-                Toast.makeText(requireContext(), "Error accessing camera", Toast.LENGTH_SHORT).show()
+        button?.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_CAMERA_PERMISSION
+                )
+            } else {
+                startCamera()
             }
+        }
+        return rootView
+    }
+
+    private fun startCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
         } else {
-            requestCameraPermission()
+            Toast.makeText(requireContext(), "No camera app found", Toast.LENGTH_SHORT).show()
         }
     }
 
-    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        // Handle surface changes if needed
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == -1) {
+            val extras = data?.extras
+            if (extras != null) {
+                val imageBitmap = extras.get("data") as Bitmap?
+                imageView?.setImageBitmap(imageBitmap)
+                saveImageToDirectory(imageBitmap)
+            }
+        }
     }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder) {
-        stopCamera()
-    }
+    private fun saveImageToDirectory(bitmap: Bitmap?) {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_$timeStamp.jpg"
 
-    private fun startPreview(surface: Surface) {
+        val storageDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MojeSlike")
+        if (!storageDir.exists()) {
+            storageDir.mkdirs()
+        }
+
+        val imageFile = File(storageDir, imageFileName)
+        val imagePath = storageDir.absolutePath + File.separator + imageFileName
         try {
-            val surfaces = listOf(surface)
-            cameraDevice.createCaptureSession(surfaces, object : CameraCaptureSession.StateCallback() {
-                override fun onConfigured(session: CameraCaptureSession) {
-                    captureSession = session
-                    val previewRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
-                    previewRequestBuilder.addTarget(surface)
-
-                    // Set the rotation of the preview
-                    previewRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, 90)
-
-                    session.setRepeatingRequest(previewRequestBuilder.build(), null, null)
-                }
-
-                override fun onConfigureFailed(session: CameraCaptureSession) {
-                    Toast.makeText(requireContext(), "Failed to configure camera preview", Toast.LENGTH_SHORT).show()
-                }
-            }, null)
-        } catch (e: CameraAccessException) {
-            Toast.makeText(requireContext(), "Error accessing camera", Toast.LENGTH_SHORT).show()
+            val fos = FileOutputStream(imageFile)
+            bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.flush()
+            fos.close()
+            Toast.makeText(requireContext(), "Image saved to $imagePath", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
         }
-    }
 
-    private fun stopCamera() {
-        captureSession.close()
-        cameraDevice.close()
-    }
-
-    private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(Manifest.permission.CAMERA),
-            CAMERA_PERMISSION_REQUEST_CODE
-        )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {
-        private const val CAMERA_PERMISSION_REQUEST_CODE = 1
+        private const val REQUEST_CAMERA_PERMISSION = 100
+        private const val REQUEST_IMAGE_CAPTURE = 101
     }
 }
-
-
