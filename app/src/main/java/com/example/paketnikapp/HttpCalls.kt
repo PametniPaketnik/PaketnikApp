@@ -9,8 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import timber.log.Timber
+import java.io.File
 
 class HttpCalls {
     companion object {
@@ -188,6 +192,61 @@ class HttpCalls {
                 false
             }
         }
-    }
 
+        suspend fun sendImageToExpress(imageBytes: ByteArray, userId: String): Boolean = withContext(Dispatchers.IO) {
+            try {
+                var isFaceRecognized = false
+                val client = OkHttpClient()
+
+                // Create the request body
+                val requestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("userId", userId)
+                    .addFormDataPart("image", null, imageBytes.toRequestBody("image/jpeg".toMediaTypeOrNull()))
+                    .build()
+
+                val facedetectionUrl = url + "facedetection"
+
+                val request = Request.Builder()
+                    .url(facedetectionUrl)
+                    .post(requestBody)
+                    .build()
+
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        try {
+                            val responseBody = response.body?.string()
+                            Timber.tag("ResponseBody").d(responseBody)
+
+                            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                            if(!responseBody.isNullOrEmpty()) {
+                                Timber.tag("ResponseBody").d(responseBody)
+                            }
+
+                            isFaceRecognized = true
+                        }
+                        catch(e: Exception) {
+                            e.printStackTrace()
+                            Timber.tag("Exception").e(Log.getStackTraceString(e))
+                        }
+                        finally {
+                            response.close()
+                        }
+                    }
+                })
+
+                delay(2000)
+                isFaceRecognized
+            }
+            catch (e: Exception) {
+                Timber.tag("HTTP CALLS").v(e.stackTrace.toString())
+                false
+            }
+        }
+    }
 }
