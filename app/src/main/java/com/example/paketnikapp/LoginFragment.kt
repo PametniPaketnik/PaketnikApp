@@ -54,10 +54,16 @@ class LoginFragment : Fragment() {
                 else {
                     activity?.runOnUiThread {
                         Toast.makeText(activity, "Nepravilno ime ali geslo", Toast.LENGTH_SHORT).show()
+                        clearInputFields()
                     }
                 }
             }
         }
+    }
+
+    private fun clearInputFields() {
+        binding.editUsername.text.clear()
+        binding.editPassword.text.clear()
     }
 
     private fun createAccountButton() {
