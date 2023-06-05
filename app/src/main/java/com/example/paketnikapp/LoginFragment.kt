@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
             scope.launch {
                 if (HttpCalls.login(username, password, app)) {
                     activity?.runOnUiThread {
-                        Toast.makeText(activity, "Uspešno prijavljeni", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(activity, "Uspešno prijavljeni", Toast.LENGTH_SHORT).show()
                     }
 
                     // val action = LoginFragmentDirections.actionFragmentLoginToHomeFragment()

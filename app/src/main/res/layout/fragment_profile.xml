@@ -121,9 +121,8 @@
         android:id="@+id/cardView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline23"
@@ -136,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/paketnik"
+            android:src="@drawable/cat"
             tools:ignore="ContentCescription" />
 
     </androidx.cardview.widget.CardView>
