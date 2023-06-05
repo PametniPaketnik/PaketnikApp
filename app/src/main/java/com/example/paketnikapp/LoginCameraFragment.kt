@@ -20,6 +20,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import android.util.Base64
+import android.util.Log
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineScope
 
@@ -76,8 +77,10 @@ class LoginCameraFragment : Fragment() {
             if (extras != null) {
                 val imageBitmap = extras.get("data") as Bitmap?
                 imageView?.setImageBitmap(imageBitmap)
-                val imageBase64 = encodeBitmapToByteArray(imageBitmap)
-                sendImageToExpress(imageBase64, app.getUser()._id)
+                val imageBytes = encodeBitmapToByteArray(imageBitmap)
+                val imageBase64 = encodeByteArrayToBase64(imageBytes)
+                Log.d("ImageBase64", "$imageBase64") // Log the imageBase64 value
+                sendImageToExpress(imageBytes, app.getUser()._id)
             }
         }
     }
@@ -90,6 +93,15 @@ class LoginCameraFragment : Fragment() {
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         return outputStream.toByteArray()
+    }
+
+    private fun encodeByteArrayToBase64(imageBytes: ByteArray?): String? {
+        if (imageBytes == null) {
+            return null
+        }
+
+        val imageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+        return imageBase64
     }
 
     private fun sendImageToExpress(imageBytes: ByteArray?, userId: String) {
