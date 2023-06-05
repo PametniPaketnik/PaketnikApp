@@ -112,18 +112,16 @@ class LoginCameraFragment : Fragment() {
                 // Toast.makeText(activity, isFaceRecognized.toString(), Toast.LENGTH_SHORT).show()
                 if (isFaceRecognized) {
                     activity?.runOnUiThread {
-                        Toast.makeText(activity, "Obraz je prepoznat", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Obraz je prepoznalo", Toast.LENGTH_SHORT).show()
                         val action = LoginCameraFragmentDirections.actionLoginCameraFragmentToHomeFragment()
                         findNavController().navigate(action)
                     }
                 } else {
                     activity?.runOnUiThread {
-                        /*Toast.makeText(activity, "Obraz nije prepoznat", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Obraz ni prepoznalo", Toast.LENGTH_SHORT).show()
                         val action = LoginCameraFragmentDirections.actionLoginCameraFragmentToFragmentLogin()
-                        findNavController().navigate(action)*/
-                        Toast.makeText(activity, "Obraz je prepoznat", Toast.LENGTH_SHORT).show()
-                        val action = LoginCameraFragmentDirections.actionLoginCameraFragmentToHomeFragment()
                         findNavController().navigate(action)
+
                     }
                 }
             }
