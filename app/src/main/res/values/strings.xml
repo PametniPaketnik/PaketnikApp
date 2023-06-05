@@ -26,4 +26,5 @@
     <string name="telephoneText">Telephone</string>
     <string name="streetText">Street</string>
     <string name="postCodeText">Post code</string>
+    <string name="capture">Capture</string>
 </resources>
