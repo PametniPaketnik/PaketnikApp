@@ -30,12 +30,14 @@
             android:id="@+id/loginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/registerText"
             android:textSize="35sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.008"
-            app:layout_constraintStart_toStartOf="@+id/guideline13" />
+            app:layout_constraintStart_toStartOf="@+id/guideline13"
+            app:layout_constraintTop_toTopOf="@+id/guideline29" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
@@ -55,12 +57,13 @@
             android:id="@+id/registerScrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             android:fillViewport="false"
             android:scrollbarSize="5dp"
+            app:layout_constraintBottom_toTopOf="@id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
             app:layout_constraintStart_toStartOf="@+id/guideline13"
-            app:layout_constraintTop_toTopOf="@+id/guideline8"
-            app:layout_constraintBottom_toTopOf="@id/guideline9">
+            app:layout_constraintTop_toTopOf="@+id/guideline8">
 
             <LinearLayout
                 android:id="@+id/registerScrollViewLinearLayout"
@@ -287,6 +290,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.86" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.14" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
