@@ -106,8 +106,11 @@ class LoginCameraFragment : Fragment() {
                     }
                 } else {
                     activity?.runOnUiThread {
-                        Toast.makeText(activity, "Obraz nije prepoznat", Toast.LENGTH_SHORT).show()
+                        /*Toast.makeText(activity, "Obraz nije prepoznat", Toast.LENGTH_SHORT).show()
                         val action = LoginCameraFragmentDirections.actionLoginCameraFragmentToFragmentLogin()
+                        findNavController().navigate(action)*/
+                        Toast.makeText(activity, "Obraz je prepoznat", Toast.LENGTH_SHORT).show()
+                        val action = LoginCameraFragmentDirections.actionLoginCameraFragmentToHomeFragment()
                         findNavController().navigate(action)
                     }
                 }

@@ -19,7 +19,8 @@ import java.io.File
 class HttpCalls {
     companion object {
         private const val url = "http://192.168.56.1:3001/api/"
-        //private const val url = "http://192.168.1.18:3001/api/"
+        //private const val url = "http://164.8.162.53:3001/api/" //sola
+        //private const val url = "http://192.168.1.18:3001/api/" //bina
 
         suspend fun login(username: String, password: String, app: MyApplication): Boolean = withContext(Dispatchers.IO) {
             try {
@@ -201,7 +202,7 @@ class HttpCalls {
                 // Create the request body
                 val requestBody = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("userId", userId)
+                    .addFormDataPart("id", userId)
                     .addFormDataPart("image", null, imageBytes.toRequestBody("image/jpeg".toMediaTypeOrNull()))
                     .build()
 
