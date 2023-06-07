@@ -20,8 +20,8 @@ import java.io.File
 class HttpCalls {
     companion object {
         //private const val url = "http://192.168.56.1:3001/api/"
-        //private const val url = "http://164.8.162.53:3001/api/" //sola
-        private const val url = "http://192.168.1.18:3001/api/" //bina
+        private const val url = "http://164.8.162.53:3001/api/" //sola
+        //private const val url = "http://192.168.1.18:3001/api/" //bina
 
         suspend fun login(username: String, password: String, app: MyApplication): Boolean = withContext(Dispatchers.IO) {
             try {
@@ -244,7 +244,7 @@ class HttpCalls {
                     }
                 })
 
-                delay(2000)
+                delay(10000)
                 isFaceRecognized
             }
             catch (e: Exception) {
