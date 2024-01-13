@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_mailboxFragment"
             app:destination="@id/mailboxFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_TSPFragment"
+            app:destination="@id/TSPFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"

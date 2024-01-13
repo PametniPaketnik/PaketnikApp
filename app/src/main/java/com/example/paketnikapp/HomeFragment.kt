@@ -74,6 +74,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         mailboxFragmentButton()
+        TSPFragmentButton()
 
         audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
@@ -256,6 +257,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun mailboxFragmentButton() {
         binding.buttonMailbox.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToMailboxFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun TSPFragmentButton() {
+        binding.buttonTSP.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToTSPFragment()
             findNavController().navigate(action)
         }
     }
