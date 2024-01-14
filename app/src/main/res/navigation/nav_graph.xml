@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/TSPFragment">
+    app:startDestination="@id/TSPAlgorithmFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -14,8 +14,8 @@
             android:id="@+id/action_homeFragment_to_mailboxFragment"
             app:destination="@id/mailboxFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_TSPFragment"
-            app:destination="@id/TSPFragment" />
+            android:id="@+id/action_homeFragment_to_TSPAlgorithmFragment"
+            app:destination="@id/TSPAlgorithmFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
@@ -89,8 +89,8 @@
             app:destination="@id/fragment_login" />
     </fragment>
     <fragment
-        android:id="@+id/TSPFragment"
-        android:name="com.example.paketnikapp.TSPFragment"
-        android:label="fragment_t_s_p"
-        tools:layout="@layout/fragment_t_s_p" />
+        android:id="@+id/TSPAlgorithmFragment"
+        android:name="com.example.paketnikapp.TSPAlgorithmFragment"
+        android:label="fragment_t_s_p_algorithm"
+        tools:layout="@layout/fragment_t_s_p_algorithm" />
 </navigation>

@@ -263,7 +263,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun TSPFragmentButton() {
         binding.buttonTSP.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToTSPFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToTSPAlgorithmFragment()
             findNavController().navigate(action)
         }
     }
