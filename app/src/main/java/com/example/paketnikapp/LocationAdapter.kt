@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lib.Location
 
-class LocationAdapter(private val locations: List<Location>) :
+class LocationAdapter(private val locations: List<Location>, private val OnItemClick: (Location) -> Unit) :
     RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
 
     class LocationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,6 +25,10 @@ class LocationAdapter(private val locations: List<Location>) :
         val location = locations[position]
         holder.indexTextView.text = location.index
         holder.streetTextView.text = location.street
+
+        holder.itemView.setOnClickListener {
+            OnItemClick(location)
+        }
     }
 
     override fun getItemCount(): Int {
