@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lib.Location
@@ -55,8 +56,16 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = locationAdapter
 
+        doneButton()
 
         return view
+    }
+
+    private fun doneButton() {
+        binding.buttonDone.setOnClickListener {
+            val action = TSPAlgorithmFragmentDirections.actionTSPAlgorithmFragmentToMapLocationFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun readDataFromTSPFile() {

@@ -92,5 +92,14 @@
         android:id="@+id/TSPAlgorithmFragment"
         android:name="com.example.paketnikapp.TSPAlgorithmFragment"
         android:label="fragment_t_s_p_algorithm"
-        tools:layout="@layout/fragment_t_s_p_algorithm" />
+        tools:layout="@layout/fragment_t_s_p_algorithm" >
+        <action
+            android:id="@+id/action_TSPAlgorithmFragment_to_mapLocationFragment"
+            app:destination="@id/mapLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapLocationFragment"
+        android:name="com.example.paketnikapp.MapLocationFragment"
+        android:label="fragment_map_location"
+        tools:layout="@layout/fragment_map_location" />
 </navigation>
