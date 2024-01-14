@@ -20,10 +20,18 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
     private val binding get() = _binding!!
     private lateinit var locationAdapter: LocationAdapter
     private val locationsList = mutableListOf<Location>()
-    private val newLocationList = mutableListOf<Location>()
+    //private val newLocationList = mutableListOf<Location>()
 
     private var isDurationEnabled = false
     private var isDistanceEnabled = false
+
+    companion object {
+        private val newLocationList = mutableListOf<Location>()
+
+        fun getNewLocationList(): List<Location> {
+            return newLocationList
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

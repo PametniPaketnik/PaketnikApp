@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.example.lib.Location
 import com.example.paketnikapp.databinding.FragmentMapBinding
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -41,7 +42,9 @@ class MapLocationFragment : Fragment() {
         map.controller.setCenter(startPoint)
         map.controller.setZoom(14.5)
 
-        createMarker()
+        val locations = TSPAlgorithmFragment.getNewLocationList()
+
+        createMarker(locations)
     }
 
     override fun onDestroyView() {
@@ -59,12 +62,17 @@ class MapLocationFragment : Fragment() {
         map.onPause()
     }
 
-    private fun createMarker() {
-        val marker = Marker(map)
-        marker.position = GeoPoint(46.5547, 15.6459)
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_location_24)
-        marker.title = "Paketnik"
-        map.overlays.add(marker)
+    private fun createMarker(locations: List<Location>) {
+        for (location in locations) {
+            val marker = Marker(map)
+            val geoPoint = GeoPoint(location.x, location.y)
+
+            marker.position = geoPoint
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_location_24)
+            marker.title = location.street
+
+            map.overlays.add(marker)
+        }
     }
 }
