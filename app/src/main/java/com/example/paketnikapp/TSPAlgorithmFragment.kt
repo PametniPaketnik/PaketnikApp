@@ -45,6 +45,8 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
         _binding = FragmentTSPAlgorithmBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        newLocationList.clear()
+
         binding.buttonDuration.setOnClickListener {
             isDurationEnabled = !isDurationEnabled
             println("Duration is enabled: $isDurationEnabled")
@@ -58,6 +60,7 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
         readDataFromTSPFile()
         val recyclerView: RecyclerView = view.findViewById(R.id.RecyclerViewFragmentLocation)
         locationAdapter = LocationAdapter(locationsList) { selectedLocation ->
+            selectedLocation.isSelected = !selectedLocation.isSelected
             newLocationList.add(Location(selectedLocation.index, selectedLocation.street, selectedLocation.x, selectedLocation.y))
             Timber.tag("TSPAlgorithmFragment").d("Selected Location: %s", newLocationList.size)
         }

@@ -15,20 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="114dp" />
+            app:layout_constraintGuide_begin="126dp" />
 
         <Button
             android:id="@+id/buttonDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
             android:text="Distance"
             app:layout_constraintBottom_toTopOf="@+id/guideline30"
             app:layout_constraintEnd_toStartOf="@+id/guideline31"
             app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/guideline34" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline31"
@@ -49,8 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintStart_toStartOf="@+id/guideline31"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/guideline34" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline32"
@@ -61,9 +58,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerViewFragmentLocation"
-            android:layout_width="411dp"
-            android:layout_height="491dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="402dp"
+            android:layout_height="464dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline32"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,10 +71,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:text="Done"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline33"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/RecyclerViewFragmentLocation"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/RecyclerViewFragmentLocation" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="668dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="64dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
