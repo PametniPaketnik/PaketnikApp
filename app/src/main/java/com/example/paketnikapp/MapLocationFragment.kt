@@ -1,5 +1,6 @@
 package com.example.paketnikapp
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polyline
 
 
 class MapLocationFragment : Fragment() {
@@ -20,6 +22,7 @@ class MapLocationFragment : Fragment() {
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: MapView
+    val numberList = listOf(1, 2, 4, 3)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,8 +46,9 @@ class MapLocationFragment : Fragment() {
         map.controller.setZoom(14.5)
 
         val locations = TSPAlgorithmFragment.getNewLocationList()
+        println(numberList)
 
-        createMarker(locations)
+        createConnectedMarkers(locations, numberList)
     }
 
     override fun onDestroyView() {
@@ -62,7 +66,9 @@ class MapLocationFragment : Fragment() {
         map.onPause()
     }
 
-    private fun createMarker(locations: List<Location>) {
+    private fun createConnectedMarkers(locations: List<Location>, numberList : List<Int>) {
+        val markers = ArrayList<Marker>()
+
         for (location in locations) {
             val marker = Marker(map)
             val geoPoint = GeoPoint(location.x, location.y)
@@ -70,9 +76,28 @@ class MapLocationFragment : Fragment() {
             marker.position = geoPoint
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_location_24)
-            marker.title = location.street
+            marker.title = location.index
+            marker.snippet = location.street
 
             map.overlays.add(marker)
+            markers.add(marker)
+        }
+
+        for (i in 0 until numberList.size - 1)
+        {
+            val startIndex = numberList[i]
+            val endIndex = numberList[i + 1]
+
+            val startMarker = markers.firstOrNull { it.title == startIndex.toString() }
+            val endMarker = markers.firstOrNull { it.title == endIndex.toString() }
+
+            if (startMarker != null && endMarker != null) {
+                val line = Polyline()
+                line.addPoint(startMarker.position)
+                line.addPoint(endMarker.position)
+                line.color = Color.BLUE
+                map.overlays.add(line)
+            }
         }
     }
 }
