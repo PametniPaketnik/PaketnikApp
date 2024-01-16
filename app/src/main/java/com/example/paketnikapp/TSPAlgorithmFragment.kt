@@ -33,6 +33,7 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
         private val newLocationList = mutableListOf<Location>()
         private val DataLocationList = mutableListOf<LocationCity>()
         private var bestPathIndexes: List<Int>? = null
+        private var bestDistance: Double? = null
 
         fun getNewLocationList(): List<Location> {
             return newLocationList
@@ -44,6 +45,14 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
 
         fun getBestPathIndexes(): List<Int>? {
             return bestPathIndexes
+        }
+
+        fun setBestDistance(distance: Double) {
+            bestDistance = distance
+        }
+
+        fun getBestDistance(): Double? {
+            return bestDistance
         }
     }
 
@@ -104,6 +113,7 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
             val bestPath = ga.execute(algorithmTsp)
 
             setBestPathIndexes(bestPath.pathIndexes.toList())
+            setBestDistance(bestPath.distance)
 
             println(bestPath.distance)
             println(Arrays.toString(bestPath.pathIndexes))

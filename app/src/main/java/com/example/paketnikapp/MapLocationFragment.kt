@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.lib.Location
 import com.example.paketnikapp.databinding.FragmentMapBinding
+import com.example.paketnikapp.databinding.FragmentMapLocationBinding
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -20,7 +22,7 @@ import timber.log.Timber
 
 class MapLocationFragment : Fragment() {
 
-    private var _binding: FragmentMapBinding? = null
+    private var _binding: FragmentMapLocationBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: MapView
     override fun onCreateView(
@@ -28,7 +30,7 @@ class MapLocationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
+        _binding = FragmentMapLocationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,6 +38,15 @@ class MapLocationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Configuration.getInstance().load(view.context, androidx.preference.PreferenceManager.getDefaultSharedPreferences(view.context))
+
+        val locations = TSPAlgorithmFragment.getNewLocationList()
+        val numberList = TSPAlgorithmFragment.getBestPathIndexes()
+        Timber.tag("MapLocationFragment").d("LOCATIONS: $numberList")
+        val doubleDistance = TSPAlgorithmFragment.getBestDistance()
+
+        binding.textViewDistance.text = "%.2f".format(doubleDistance)
+
+
 
         map = binding.mapview
         map.setTileSource(TileSourceFactory.MAPNIK)
@@ -45,9 +56,7 @@ class MapLocationFragment : Fragment() {
         map.controller.setCenter(startPoint)
         map.controller.setZoom(14.5)
 
-        val locations = TSPAlgorithmFragment.getNewLocationList()
-        val numberList = TSPAlgorithmFragment.getBestPathIndexes()
-        Timber.tag("MapLocationFragment").d("locations: $numberList")
+
 
         if (numberList != null) {
             createConnectedMarkers(locations, numberList)
