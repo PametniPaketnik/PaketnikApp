@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="88dp"
         android:backgroundTint="@color/blue"
-        android:text="Open The Box"
+        android:text="@string/open_the_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
-        android:text="Show Mailbox"
+        android:text="@string/show_mailbox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,8 @@
         android:id="@+id/buttonTSP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TSP"
+        android:backgroundTint="@color/blue1"
+        android:text="@string/TSP"
         app:layout_constraintBottom_toTopOf="@+id/buttonScanQRCode"
         app:layout_constraintEnd_toStartOf="@+id/guideline19"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
@@ -67,7 +68,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline21"
         app:layout_constraintEnd_toStartOf="@+id/guideline19"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
-        app:layout_constraintTop_toTopOf="@+id/guideline22" />
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
+        android:contentDescription="@string/home_image_desc" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline22"

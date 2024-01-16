@@ -27,4 +27,12 @@
     <string name="streetText">Street</string>
     <string name="postCodeText">Post code</string>
     <string name="capture">Capture</string>
+
+    <string name="TSP">TSP</string>
+    <string name="open_the_box">Open The Box</string>
+    <string name="show_mailbox">Show Mailbox</string>
+    <string name="home_image_desc">Pametni paketnik society</string>
+    <string name="distance">Distance</string>
+    <string name="done">Done</string>
+    <string name="duration">Duration</string>
 </resources>
