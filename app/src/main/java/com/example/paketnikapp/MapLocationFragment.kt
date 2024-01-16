@@ -15,6 +15,7 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
+import timber.log.Timber
 
 
 class MapLocationFragment : Fragment() {
@@ -22,7 +23,6 @@ class MapLocationFragment : Fragment() {
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: MapView
-    val numberList = listOf(1, 2, 4, 3)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,9 +46,12 @@ class MapLocationFragment : Fragment() {
         map.controller.setZoom(14.5)
 
         val locations = TSPAlgorithmFragment.getNewLocationList()
-        println(numberList)
+        val numberList = TSPAlgorithmFragment.getBestPathIndexes()
+        Timber.tag("MapLocationFragment").d("locations: $numberList")
 
-        createConnectedMarkers(locations, numberList)
+        if (numberList != null) {
+            createConnectedMarkers(locations, numberList)
+        }
     }
 
     override fun onDestroyView() {
