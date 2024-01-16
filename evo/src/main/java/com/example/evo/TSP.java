@@ -1,5 +1,7 @@
 package com.example.evo;
 
+import com.example.lib.LocationCity;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -84,16 +86,16 @@ public class TSP {
         this.maxEvaluations = maxEvaluations;
     }
 
-    public TSP(String path, int maxEvaluations, double[][] citiesData, String pathToWeights) {
+    public TSP(String path, int maxEvaluations, List<LocationCity> citiesData, String pathToWeights) {
         numberOfEvaluations = 0;
         this.maxEvaluations = maxEvaluations;
         this.name = path;
 
-        for (double[] cityData : citiesData) {
+        for (LocationCity locationCity : citiesData) {
             City city = new City();
-            city.index = (int) cityData[0];
-            city.x = cityData[1];
-            city.y = cityData[2];
+            city.index = locationCity.getIndex();
+            city.x = locationCity.getX();
+            city.y = locationCity.getY();
             cities.add(city);
         }
         start = cities.get(0);

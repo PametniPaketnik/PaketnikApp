@@ -23,6 +23,7 @@ public class TSPMain2 {
 
                 // Add more cities as needed
         };
+        /*
         for (int i = 0; i < 5; i++) {
             TSP eilTsp = new TSP("realProblem96.tsp", 1000, citiesData, "duration_matrix.tsp");
             //TSP eilTsp = new TSP("bays29.tsp", 1000);
@@ -33,6 +34,8 @@ public class TSPMain2 {
             System.out.println(Arrays.toString(bestPath.getPathIndexes()));
         }
         System.out.println(RandomUtils.getSeed());
+
+         */
 
     }
 }
