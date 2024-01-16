@@ -1,18 +1,22 @@
 package com.example.paketnikapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.evo.GA
+import com.example.evo.TSP
 import com.example.lib.Location
+import com.example.lib.LocationCity
 import com.example.paketnikapp.databinding.FragmentTSPAlgorithmBinding
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.Arrays
 
 
 class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
@@ -20,16 +24,26 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
     private val binding get() = _binding!!
     private lateinit var locationAdapter: LocationAdapter
     private val locationsList = mutableListOf<Location>()
-    //private val newLocationList = mutableListOf<Location>()
 
     private var isDurationEnabled = false
     private var isDistanceEnabled = false
+    private var filePath = ""
 
     companion object {
         private val newLocationList = mutableListOf<Location>()
+        private val DataLocationList = mutableListOf<LocationCity>()
+        private var bestPathIndexes: List<Int>? = null
 
         fun getNewLocationList(): List<Location> {
             return newLocationList
+        }
+
+        fun setBestPathIndexes(indexes: List<Int>) {
+            bestPathIndexes = indexes
+        }
+
+        fun getBestPathIndexes(): List<Int>? {
+            return bestPathIndexes
         }
     }
 
@@ -46,15 +60,18 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
         val view = binding.root
 
         newLocationList.clear()
+        DataLocationList.clear()
 
         binding.buttonDuration.setOnClickListener {
             isDurationEnabled = !isDurationEnabled
-            println("Duration is enabled: $isDurationEnabled")
+            Timber.tag("TSPAlgorithmFragment").d("Duration is enabled: %s", isDurationEnabled)
+            filePath = "duration_matrix.tsp"
         }
 
         binding.buttonDistance.setOnClickListener {
             isDistanceEnabled = !isDistanceEnabled
-            println("Distance is enabled: $isDistanceEnabled")
+            Timber.tag("TSPAlgorithmFragment").d("Distance is enabled: %s", isDistanceEnabled)
+            filePath = "distance_matrix.tsp"
         }
 
         readDataFromTSPFile()
@@ -62,19 +79,35 @@ class TSPAlgorithmFragment : Fragment(R.layout.fragment_t_s_p_algorithm) {
         locationAdapter = LocationAdapter(locationsList) { selectedLocation ->
             selectedLocation.isSelected = !selectedLocation.isSelected
             newLocationList.add(Location(selectedLocation.index, selectedLocation.street, selectedLocation.x, selectedLocation.y))
+            DataLocationList.add(LocationCity(selectedLocation.index.toInt(), selectedLocation.x, selectedLocation.y))
             Timber.tag("TSPAlgorithmFragment").d("Selected Location: %s", newLocationList.size)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = locationAdapter
 
-        doneButton()
+        doneButton(DataLocationList)
 
         return view
     }
 
-    private fun doneButton() {
+    private fun doneButton(DataLocationList: MutableList<LocationCity>) {
         binding.buttonDone.setOnClickListener {
             val action = TSPAlgorithmFragmentDirections.actionTSPAlgorithmFragmentToMapLocationFragment()
+
+            //print DataLocationList in timber
+            for (i in DataLocationList) {
+                Timber.tag("TSPAlgorithmFragment").d("DataLocationList: %s", i)
+            }
+
+            val algorithmTsp = TSP("", 1000, DataLocationList, filePath)
+            val ga = GA(100, 0.8, 0.1)
+            val bestPath = ga.execute(algorithmTsp)
+
+            setBestPathIndexes(bestPath.pathIndexes.toList())
+
+            println(bestPath.distance)
+            println(Arrays.toString(bestPath.pathIndexes))
+
             findNavController().navigate(action)
         }
     }
